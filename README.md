@@ -1,6 +1,6 @@
 # Career Copilot — desktop app
 
-A local Electron desktop app that wraps your [`career_ai_assistant`](../career_ai_assistant) RAG backend with:
+A local Electron desktop app that wraps the [`career-ai-assistant`](https://github.com/dikshant1103-beep/career-ai-assistant) RAG backend with:
 
 1. **Drop-in resume upload** → embedded into Chroma instantly
 2. **Auto job search** across Adzuna + Remotive + Greenhouse + Lever in parallel
@@ -15,10 +15,16 @@ Because of how job platforms (LinkedIn / Indeed / Naukri) lock down automated fo
 ## 1. One-time install
 
 ```bash
-# Pre-requisites: Node ≥ 18, Python ≥ 3.10, and the sibling career_ai_assistant project built at ~/Desktop/career_ai_assistant
-cd ~/Desktop/career_copilot
+# Pre-requisites: Node ≥ 18, Python ≥ 3.10
+# This app depends on its sibling project, cloned NEXT TO it (same parent dir):
+git clone https://github.com/dikshant1103-beep/career-ai-assistant.git
+git clone https://github.com/dikshant1103-beep/career-copilot.git
+cd career-ai-assistant && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt && cd ..
+
+cd career-copilot
 bash install.sh             # creates venv, installs backend + frontend deps
 cp .env.example .env
+# If the sibling is NOT at ~/Desktop/career_ai_assistant, set CAREER_AI_PATH in .env
 # Edit .env:
 #   ANTHROPIC_API_KEY=sk-ant-…            (from console.anthropic.com)
 #   ADZUNA_APP_ID=… ADZUNA_APP_KEY=…       (from developer.adzuna.com)
@@ -139,7 +145,7 @@ Edit `backend/sources/companies.py` to add/remove the company slugs that Greenho
 | Sidebar shows "Backend offline"                                          | The FastAPI process didn't start. Run `bash start.sh` again and check the terminal logs.                                           |
 | Sidebar shows `API key: missing`                                          | Edit `.env`, set `ANTHROPIC_API_KEY=sk-ant-…`, restart `start.sh`.                                                                  |
 | Sidebar shows `adzuna: no key`                                            | Optional — leave it; or get free keys at developer.adzuna.com and add `ADZUNA_APP_ID/KEY` to `.env`.                              |
-| `RuntimeError: career_ai_assistant not found`                             | Either build it (we generated it earlier) or set `CAREER_AI_PATH=/path/to/career_ai_assistant` in `.env`.                          |
+| `RuntimeError: career_ai_assistant not found`                             | Clone [career-ai-assistant](https://github.com/dikshant1103-beep/career-ai-assistant) and/or set `CAREER_AI_PATH=/path/to/career_ai_assistant` in `.env`.  |
 | Search returns 0 jobs from `greenhouse`/`lever` for a niche query         | They only cover ~50 companies (see `backend/sources/companies.py`). Add more slugs or rely on Adzuna for breadth.                  |
 | `npm install` fails with `EACCES` / permission errors                     | You're running it as root; re-run as your normal user, or `chown -R "$USER" .` in this folder.                                     |
 | Electron window stays blank                                               | The Vite dev server isn't up yet on first run. Wait ~10 sec, or open `http://localhost:5173` in a browser to confirm it's live.    |
