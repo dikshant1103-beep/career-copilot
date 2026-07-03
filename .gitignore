@@ -1,0 +1,10 @@
+.env
+node_modules/
+dist/
+dist-electron/
+__pycache__/
+*.pyc
+*.log
+.DS_Store
+.vscode/
+.idea/

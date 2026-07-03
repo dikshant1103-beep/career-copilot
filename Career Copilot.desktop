@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Career Copilot
+Comment=Local AI-powered job search & application copilot
+Exec=/home/dikshant/Desktop/career_copilot/launch.sh
+Icon=/home/dikshant/Desktop/career_copilot/icon.svg
+Path=/home/dikshant/Desktop/career_copilot
+Terminal=false
+Categories=Office;Development;Network;
+StartupNotify=true
